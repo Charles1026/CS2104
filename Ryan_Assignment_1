@@ -206,5 +206,17 @@ Reflection: Write a brief (1-2 paragraphs) reflection on the challenges
 you faced and what you learned from this assignment. If you used LLMs,
 write down which system you used, and summarize how you prompted the system.
 
-Understanding Regex is an 
+Understanding Regex was difficult at first but after explaining the specifications
+of what a symbol and number were to ChatGPT, I was able to easily get the Regex and
+understand how it worked. I learnt more about the existence of characters that
+were specially used in regex, thus required a \ to make it literal.
+
+Additionally, understanding the specific format of <define> and <if> was tedious at 
+first. However, after understanding how the parse_list() function works, it was 
+much easier to craft out the specific cases for define, define-func and if.
+
+
+I used ChatGPT and I provided it information on the task given to us, specifically 
+the Regex already provided to us and the grammar rules. I then asked it to provide
+good test cases for me to try out on my code.
 '''
