@@ -108,6 +108,9 @@ class SchemeParser:
 
                 return tuple(elements)
             
+            if elements[1][0] == 'number':
+                raise SyntaxError("Invalid data type for variable, it can not be a number. It has to be a symbol")
+            
             raise SyntaxError("Place variable or function signature in paranthesis after 'define'")
 
         if elements[0] == ('symbol', 'if'):
@@ -162,7 +165,7 @@ scheme_code_4 = '''
 '''
 
 scheme_code_5 = '''
-
+123var (a b (a 1b@ c) (define 123x 10) (define (add x y) + x y)) (if (> x 0) x) (if (> x 0) x (- x)
 '''
 
 # Running a test
