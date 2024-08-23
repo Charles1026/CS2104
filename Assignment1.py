@@ -86,10 +86,16 @@ class SchemeParser:
                 
         # Define
         elif elements[0][1] == 'define':
-            # if len(elements) != 4: # 4 as (if exp exp exp)
-            #     raise SyntaxError("Invalid if syntax")
-          
-            return ('define', elements[1:])
+            if len(elements) < 3: # as min 3 components for define
+                raise SyntaxError("Unexpected end of define")
+              
+            # Define Var
+            if elements[1][0] == "symbol" or elements[1][0] == "number":
+              return ('define', elements[1:])
+            
+            # Define Func
+            if elements[1][0] == "list":
+              return ('define-func', elements[1:])
         
         # If
         elif elements[0][1] == 'if':
@@ -132,10 +138,10 @@ scheme_code_2 = '''
 (define first car)
 (define second cadr)
 
-(define (sum row)
-  (if (= (length row) 1)
-    (reverse result)
-))
+(define (factorial n)
+  (if (= n 0)
+      1
+      (* n (factorial (- n 1)))))
 '''
 
 scheme_code_3 = '''
@@ -153,7 +159,7 @@ scheme_code_3 = '''
 # ...
 # '''
 
-CODE_SNIPPET = scheme_code_3
+CODE_SNIPPET = scheme_code_2
 
 # Test the template
 tokens = scheme_lexer(CODE_SNIPPET)
