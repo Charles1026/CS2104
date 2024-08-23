@@ -91,12 +91,25 @@ class SchemeParser:
             if len(elements) < 3: 
                 raise SyntaxError("Unexpected end of define")
               
+            # Invalid if second elem is number
+            if elements[1][0] == "number":
+                raise SyntaxError("Unexpected number in define var")
+              
             # Define Var
-            if elements[1][0] == "symbol" or elements[1][0] == "number":
+            if elements[1][0] == "symbol":
                 return ('define', elements[1:])
             
             # Define Func
             if elements[1][0] == "list":
+                # List must not be empty
+                if len(elements[1][1]) <= 0:
+                    raise SyntaxError("Define func params must not be empty")
+                  
+                # List elems can only be symbols
+                for elem in elements[1][1]:
+                    if elem[0] != "symbol":
+                        raise SyntaxError("Define func params can only be symbols")
+              
                 return ('define-func', elements[1:])
         
         # If
@@ -132,51 +145,94 @@ def print_ast(node, indent=0):
         print('  ' * indent + str(node))
 
 # Testing the template
+SNIPPETS = {
 
-scheme_code_1 = '''
-(()()())
-'''
+  "scheme_code_1": (True, '''
+  (()()())
+  '''),
 
-scheme_code_2 = '''
-(define first car)
-(define second cadr)
+  "scheme_code_2": (True, '''
+  (define first car)
+  (define second cadr)
 
-(define (factorial n)
-  (if (= n 0)
-      1
-      (* n (factorial (- n 1)))))
-'''
+  (define (factorial n)
+    (if (= n 0)
+        1
+        (* n (factorial (- n 1)))))
+  '''),
 
-scheme_code_3 = '''
-(define (max a b)
-  (if (> a b)
-      a
-      b))
-'''
+  "scheme_code_3": (True, '''
+  (define (max a b)
+    (if (> a b)
+        a
+        b))
+  '''),
 
-# scheme_code_4 = '''
-# ...
-# '''
+  # Negative, extra bracket at end of line 1
+  "scheme_code_4": (False, '''
+  (define (is-empty lst))
+    (if (null? lst)
+        #t
+        #f))
+  '''),
 
-# scheme_code_5 = '''
-# ...
-# '''
+  # Negative, number as second elem of define
+  "scheme_code_5": (False, '''
+  (define 0.0 car)
+  '''),
 
-CODE_SNIPPET = scheme_code_2
+  # Negative, empty list in define
+  "scheme_code_6": (False, '''
+  (define ()
+    (if (> a b)
+        a
+        b))
+  '''),
 
-# Test the template
-tokens = scheme_lexer(CODE_SNIPPET)
+  # Negative, number in define func param list
+  "scheme_code_7": (False, '''
+  (define (max 0.0 b)
+    (if (> a b)
+        a
+        b))
+  '''),
 
-for token in tokens:
-    print(token)
+  # Negative, missing elem in if
+  "scheme_code_8": (False, '''
+  (define (max a b)
+    (if (> a b)
+        a))
+  '''),
 
-# Running a test
-tokens = scheme_lexer(CODE_SNIPPET)
-parser = SchemeParser(tokens)
-ast = parser.parse()
+  # Negative, extra elem in if
+  "scheme_code_9": (False, '''
+  (define (max a b)
+    (if (> a b)
+        a
+        b
+        c))
+  ''')
+}
 
-print_ast(ast)
+for name, (shouldSucceed, snippet) in SNIPPETS.items():
+  try:
+      # Running a test
+      tokens = scheme_lexer(snippet)
+      parser = SchemeParser(tokens)
+      ast = parser.parse()
 
+      for token in tokens:
+          print(token)
+          
+      print_ast(ast)
+  except SyntaxError:
+      if shouldSucceed:
+          print(f"Test: {name} failed.")
+          break
+      continue
+  if not shouldSucceed:
+      print(f"Test: {name} failed.")
+      break
 '''
 Grammar
 
@@ -247,5 +303,5 @@ Reflection: Write a brief (1-2 paragraphs) reflection on the challenges
 you faced and what you learned from this assignment. If you used LLMs,
 write down which system you used, and summarize how you prompted the system.
 
-<your reflection goes here>
+The challenge I faced mainly was understanding the CFG in this case, 
 '''
