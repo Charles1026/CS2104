@@ -81,21 +81,23 @@ class SchemeParser:
         
         self.current += 1  # Skip RPAREN
         
+        # If no elements, is empty list
         if not elements:
             return ('list', [])
                 
         # Define
         elif elements[0][1] == 'define':
-            if len(elements) < 3: # as min 3 components for define
+            # Ensure min size of define statement
+            if len(elements) < 3: 
                 raise SyntaxError("Unexpected end of define")
               
             # Define Var
             if elements[1][0] == "symbol" or elements[1][0] == "number":
-              return ('define', elements[1:])
+                return ('define', elements[1:])
             
             # Define Func
             if elements[1][0] == "list":
-              return ('define-func', elements[1:])
+                return ('define-func', elements[1:])
         
         # If
         elif elements[0][1] == 'if':
@@ -104,6 +106,7 @@ class SchemeParser:
           
             return ('if', elements[1:])
         
+        # if first elem not define or if, it is a list
         return ('list', elements)
 
 def print_ast(node, indent=0):
