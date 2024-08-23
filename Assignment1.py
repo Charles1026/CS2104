@@ -144,7 +144,7 @@ def print_ast(node, indent=0):
     else:
         print('  ' * indent + str(node))
 
-# Testing the template
+# Testing the template name: (shouldSucceed, codeSnippet)
 SNIPPETS = {
 
   "scheme_code_1": (True, '''
