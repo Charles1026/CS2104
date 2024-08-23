@@ -16,8 +16,8 @@ def scheme_lexer(code):
     patterns = [
         ('LPAREN', r'\('),
         ('RPAREN', r'\)'),
-        ('NAME', r'([a-zA-Z]|[+*-/=<>])([a-zA-Z]|[0-9]|[+*-/=<>])*'),
-        ('NUMBER', r'[0-9]+(\.[0-9]+)?'),
+        ('NAME', r'[a-zA-Z+\*\/=\-<>][a-zA-Z0-9+\*\/=\-<>]*'),
+        ('NUMBER', r'\d+(\.\d+)?'),
         ('WHITESPACE', r'\s+')
     ]
     
@@ -34,15 +34,7 @@ def scheme_lexer(code):
     
     return tokens
 
-# Test the template
-
-scheme_code = '(()()())'
-
-tokens = scheme_lexer(scheme_code)
-
-for token in tokens:
-    print(token)
-
+# parser
 
 class SchemeParser:
     def __init__(self, tokens):
@@ -89,17 +81,21 @@ class SchemeParser:
         
         self.current += 1  # Skip RPAREN
         
-        print(elements)
-        
         if not elements:
             return ('list', [])
                 
         # Define
         elif elements[0][1] == 'define':
+            # if len(elements) != 4: # 4 as (if exp exp exp)
+            #     raise SyntaxError("Invalid if syntax")
+          
             return ('define', elements[1:])
         
         # If
         elif elements[0][1] == 'if':
+            if len(elements) != 4: # 4 as (if exp exp exp)
+                raise SyntaxError("Invalid if syntax")
+          
             return ('if', elements[1:])
         
         return ('list', elements)
@@ -142,9 +138,12 @@ scheme_code_2 = '''
 ))
 '''
 
-# scheme_code_3 = '''
-# ...
-# '''
+scheme_code_3 = '''
+(define (max a b)
+  (if (> a b)
+      a
+      b))
+'''
 
 # scheme_code_4 = '''
 # ...
@@ -154,8 +153,16 @@ scheme_code_2 = '''
 # ...
 # '''
 
+CODE_SNIPPET = scheme_code_3
+
+# Test the template
+tokens = scheme_lexer(CODE_SNIPPET)
+
+for token in tokens:
+    print(token)
+
 # Running a test
-tokens = scheme_lexer(scheme_code_2)
+tokens = scheme_lexer(CODE_SNIPPET)
 parser = SchemeParser(tokens)
 ast = parser.parse()
 
