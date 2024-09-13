@@ -230,7 +230,7 @@ fun totalArea shapes =
 (* Test case: if you don't answer this question,
    comment the following before you submit       *)
 
-val total = totalArea shapes
+val total = totalArea shapes;
 
 (* QUESTION 5 (4 marks) *)
 
@@ -242,7 +242,8 @@ val total = totalArea shapes
    on integers as first argument and lists of
    integers as second argument.                  *)
 
-(* your solution goes here                       *)
+fun countOccurrences (n: int) (lst: int list) : int =
+    List.length (List.filter (fn x => x = n) lst)    
 
 (* Test case: if you don't answer this question,
    comment the following before you submit       *)
@@ -255,7 +256,8 @@ countOccurrences 3
    it should be applicable to a list of any type
    of value, not just integers                   *)
 
-(* your solution goes here                       *)
+fun countOccurrences' (n: ''a) (lst: ''a list) : int =
+    List.length (List.filter (fn x => x = n) lst)
 
 (* Test case: if you don't answer this question,
    comment the following before you submit       *)
@@ -282,7 +284,7 @@ val bossKeyCount = countOccurrences'
    the application does not pass the SML
    type checker.                                 *)
 
-val strangeValue = true; (* replace true to
+val strangeValue = fn (x, y) => x + y; (* replace true to
                             get a type error
                             in the application
                             below                *)
