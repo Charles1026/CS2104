@@ -221,7 +221,7 @@ val shapes = [
 fun totalArea shapes =
     let
         (* Helper function to accumulate areas *)
-        fun addArea (acc, Shape {area, name}) = acc + area ()
+        fun addArea (Shape {area, name}, acc) = acc + area ()
     in
         (* Use foldl to sum up the areas *)
         foldl addArea 0.0 shapes
