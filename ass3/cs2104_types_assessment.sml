@@ -302,7 +302,7 @@ val bossKeyCount = countOccurrences'
    the application does not pass the SML
    type checker.                                 *)
 
-val strangeValue = true; (* replace true to
+val strangeValue = fn _ => 1; (* replace true to
                             get a type error
                             in the application
                             below                *)
