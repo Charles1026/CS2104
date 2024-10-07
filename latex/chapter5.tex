@@ -1,0 +1,27 @@
+\begin{center}
+     \Large{5. Object Oriented Programming}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Knowledge Representation} through aggregation, classification and specialisation(usually through inheritance) of data.
+    \item \textbf{Control Flow} in OOP can flow between an object's methods(self/method application) and also amongst objects(object application).
+\end{itemize}
+
+\begin{center}
+     \textbf{Bindings}
+\end{center}
+\begin{itemize}
+    \item \textbf{Early Binding} resolves the method/function call at compile time.
+    \item \textbf{Late Binding} resolves the method/function call only at runtime based on the actual object instead of the reference type. This allows different outcome for the same reference type based on the actual object's type. This adds the overhead of using a virtual method table or some other form of runtime dispatch to find the correct method.
+    \item \textbf{Virtual Method Table} is constructed at compile time, mapping method names by class to the corresponding methods, which is then used for lookup during runtime. e.g. \code{childObj.method} may map to \code{parentObj.method} if the Child class does not have its own implementation of method.
+    \item \textbf{Inline Caching} caches the results of a virtual method lookup by class. Called as such  because the machine code is used to store the lookup result.
+\end{itemize}
+
+\begin{center}
+     \textbf{Source Object System}
+\end{center}
+\begin{itemize}
+    \item Properties in JavaScript are just strings, hence \code{obj.field} is equivalent to \code{obj["field"]} but not necessarily \code{obj[field]}. As strings are first class, properties are also first class in JavaScript.
+    \item JavaScript implements late binding as it is a scripting language that uses JIT compiling and runtime type inference.
+    \item JavaScript implements inheritance \code{class x1 extends x2} as \code{const x1 = \{Parent:x2\}}.
+\end{itemize}

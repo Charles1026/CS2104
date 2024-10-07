@@ -1,0 +1,35 @@
+\begin{center}
+     \Large{2.5. Functional Programming CSE}
+\end{center}
+\begin{itemize}
+    \item \textbf{Control}: A stack(LIFO) of instructions on what to execute next.
+    \item \textbf{Stash}: Stores our intermediate values used for our computation in LIFO order.
+    \item \textbf{Environment}: Stores bindings of our variables to values
+    \item In certain aspects, such as state, side effects and control flow, functional programming can be thought of as a restriction on the imperative programming paradigm.
+    \item Notional mental model for functional program execution. Think of execution as a step by step simplification of the program's expressions
+    \item \textit{Applicative Order Reduction}, or Eager Evaluation, specifies that all function parameters need to be evaluated before the function is applied. Contrasts \item \textit{Normal Order Reduction} or Lazy Evaluation which evaluates values as and when needed.
+\end{itemize}
+
+
+\begin{center}
+     \textbf{Source CSE}
+\end{center}
+\begin{itemize}
+    \item \textbf{Calculator Language} breaks down a complex expression by operator precedence and from right to left, pushing them onto the Control then popping and evaluating each operation. As Control is a stack, we insert right to left and process left to right.
+    \item \textbf{Sequences} of statements are pushed onto the stash last to first, so we evaluate them first to last.
+    \item \textbf{Conditionals} evaluates the condition and pushes the matching branch onto the Control.
+    \item \textbf{Blocks} are created explicitly, by loops \& conditionals and by function calls. An environment frame is created if there is a variable declaration in the block. The frame points to the environment the block was created in. After finishing with the block, we call \code{env} to revert to the environment it points to.
+    \item \textbf{Functions} capture the environment it was defined in as a closure. When called, the function extends from its closure's environment and not the calling environment. Note that the function body extends the function parameters which extends the defining environment. 
+    \item \textbf{Returns} are implicit from a function as the latest value on the stash. If we do not want the returned value, we need to call \code{pop} to remove it from the stash. If there is an explicit return in the middle of a function, we need to insert a \code{mark} before the function is expanded to denote where to return to in the control. If the return is called, the control will discard all instructions between the return and the nearest mark.
+\end{itemize}
+
+\begin{center}
+     \textbf{Advanced Source CSE Extensions}
+\end{center}
+\begin{itemize}
+    \item As the Source CSE is naturally tail recursive, we can sometimes reuse the environment frame. 
+    \item \textbf{Exception Handling} can be implemented similar to mark with exception markers.
+    \item \textbf{call\_cc} can be implemented similar to in Scheme. This captures the current execution point of the program and passes it as an argument to a function call. This can then be called later on with a value which will jump the execution back to when call\_cc was called and return that value as the result of the call\_cc function.
+    \item \textbf{Event Based Programming} can be implemented by having await capture the current control and stash in a promise, which can then be restored when the promise is called.
+    \item \textbf{Concurrent Programming} can be implemented by assigning each thread its own control and stash and synchronise them with synchronization objects (mutexes, channels, etc) in the environment.
+\end{itemize}

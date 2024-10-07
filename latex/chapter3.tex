@@ -1,0 +1,48 @@
+\begin{center}
+     \Large{3. Types}
+\end{center}
+\begin{itemize}
+    \item Prevent mismatch between our imagination of data and the actual representation, leading to errors/bugs by imposing strict "discipline" on our programs.
+\end{itemize}
+\begin{center}
+     \textbf{Categories of Types}
+\end{center}
+\begin{itemize}
+    \item \textbf{Primitive types} are the most basic types in a language which cannot be broken down into other types. 
+    \item \textbf{Enumerated types} are self defined types which consists of  a set of  named values which each represent to a unique value. It is the assigning of values to names which can help make code more readable. e.g. \code{enum} in C, \code{datatype} in SML.
+    \item \textbf{Cartesian products} are tuples of values, which can be of different types, aggregated together to form a new type. e.g. \code{structs} in C, \code{tuples} in SML and \code{records} in Pascal.
+    \item \textbf{Container types} are a collection of homogeneously typed values. e.g. lists, arrays, dictionaries and sets.
+    \item \textbf{Functions} can be passed as function arguments, returned and capture the defining environment in first class function languages. C is not a first class function language. Functions in C are usually called second class as we can still modify and pass them using function pointers.
+    \item \textbf{Type Unions} combine 2 or more types into 1 type, so a type of a variable of the union type can be any of the combined types. Can be implemented using tags to differentiate types like in SML to support pattern matching.
+    \item \textbf{Type Intersections} are used in OOP to describe the properties of a type by requiring it to be comprised of all the intersecting types. 
+\end{itemize}
+
+\begin{center}
+     \textbf{Typing Strategies}
+\end{center}
+\begin{itemize}
+    \item OS level exceptions like segfaults protect against severe type transgressions by killing the program. 
+    \item \textbf{Dynamic Typing} does type checking and raises type errors at runtime. Type information needs to be carried through to runtime, increasing the software's overhead \& size. This could also cause type errors after the software is shipped out.
+    \item \textbf{Static Typing} does type checking during compilation, ensuring no type errors at runtime.
+\end{itemize}
+
+\begin{center}
+     \textbf{Typing Systems}
+\end{center}
+\begin{itemize}
+    \item A type system describes the how the types of a language are categorized and interact with one another. The richness of the type system determines the complexity of the types allowed. Each type describes the set of values that can make up the type. 
+    \item A \textbf{Well Typed} program with respect to a type system is a program that conforms to the requirements of the type system. Each type system defines a set of well typed programs. The type system's strictness determines how small the set of well typed programs is.
+    \item \textbf{Type Safe} type systems prevent forbidden operations on types in well typed programs. It combines static(typing) and dynamic(execution) semantics. \textbf{Memory Safe} type systems prevent invalid memory access by types in well typed programs. 
+    \item \textbf{Weakly Typed} type systems like in C give users more control like manual memory management, explicit type casting and pointer arithmetic but are susceptible to type errors.
+\end{itemize}
+
+\begin{center}
+     \textbf{Advanced Typing}
+\end{center}
+\begin{itemize}
+    \item \textbf{Recursive Types} are Cartesian products and container types where the elements are the same type as the container.
+    \item \textbf{Generic Types} allow operations to apply uniformly regardless of the specific type. 
+    \item \textbf{Type Inference} allows type systems to infer the type of a value without explicit specification.
+    \item \textbf{Gradual Typing} allows static compile time checks for simpler types and runtime type checks for dynamic expressions.
+    \item Type safe languages allow omission of runtime type checks to reduce overhead. Dynamically typed languages use type information at runtime to optimise execution(runtime specialisation, JIT compilation).
+\end{itemize}

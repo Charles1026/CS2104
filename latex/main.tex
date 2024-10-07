@@ -1,0 +1,74 @@
+
+\documentclass[10pt]{article}
+
+% -------------------------------------------------------------------
+% packages 
+% -------------------------------------------------------------------
+
+\usepackage{enumitem}
+\setlist{leftmargin=-.0cm}
+
+\usepackage{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{graphicx,overpic}
+\usepackage{color, colortbl}
+\usepackage{hyperref}
+\usepackage{listings}
+
+% -------------------------------------------------------------------
+% parameters 
+% -------------------------------------------------------------------
+
+% margins & spacing 
+\geometry{margin = 0.5in}
+\pagestyle{empty}
+\setlength{\parindent}{0pt} 
+\setlength{\parskip}{0pt}
+
+ % box style
+\lstset{ 
+    basicstyle = \ttfamily,
+    frame = single,
+    breaklines = true,
+    backgroundcolor = \color{yellow},
+    columns = fullflexible,
+}
+
+% hyperlinks 
+\hypersetup{
+    colorlinks = true,
+    linkcolor = blue,
+    filecolor = magenta,      
+    urlcolor = cyan,
+}
+
+% -------------------------------------------------------------------
+% functions & environments 
+% -------------------------------------------------------------------
+
+% mono space font 
+\newcommand{\code}[1]{\texttt{#1}}
+
+% -------------------------------------------------------------------
+% functions & environments 
+% -------------------------------------------------------------------
+
+\begin{document}
+\renewcommand{\arraystretch}{1.2}
+
+\include{chapter1.tex}
+\newpage
+\include{chapter2.tex}
+\newpage
+\include{chapter2.5.tex}
+\newpage
+\include{chapter3.tex}
+\newpage
+\include{chapter4.tex}
+\newpage
+\include{chapter5.tex}
+\end{document}
+
+% ---------------------------------------------------------------
+% template 
+% ---------------------------------------------------------------

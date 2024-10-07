@@ -1,0 +1,52 @@
+\begin{center}
+     \Large{1. Programming Language Syntax}
+\end{center}
+\begin{itemize}
+    \item A programming Language is a formal framework used to instruct computers to execute a computational process.
+    \item The language defines the set of allowed programs, which is separate from the implementation. 
+    \item A programming language disregards phonology(sound), morphology(shape) and pragmatics(context), focusing on syntax and semantics.
+\end{itemize}
+
+\begin{center}
+     \textbf{Syntax and Semantics}
+\end{center}
+\begin{itemize}
+    \item Syntax describes the structure of programs, allowed tokens and how they can be assembled.
+    \item Semantics describes the logic and meaning of programs, how they are supposed to execute.
+    \item Can be represented by Landin's 4 Levels of Syntax:
+\end{itemize}
+\begin{center}
+    \begin{tabular}{ c c }
+    \hline
+    Physical & characters, fonts \& Spelling \\
+    \rowcolor{yellow}
+    Structural & grammar \& token sequence \\
+    Abstract & structure of language constructs  \\
+    \rowcolor{yellow}
+    Core & simplified tree needed to explain language  \\
+    \hline
+    \end{tabular}
+\end{center}
+\begin{itemize}
+    \item \textbf{Lexer} processes the input into tokens, \textbf{Parser} assembles the tokens into meaningful structures.
+    \item Chomsky's Hierarchy of Languages(the larger the type, the more restrictive, equally expressive within tiers):
+\end{itemize}
+\begin{center}
+    \begin{tabular}{ c c }
+    \hline
+    Type-3 Regular Languages & Regular Expressions,\newline(Non-)Deterministic Finite Automata \(\{a^n|n>= 1\}\) \\
+    \rowcolor{yellow}
+    Type-2 Context Free Languages & Pushdown Automata, Context Free Grammar \(\{a^nb^n|n>= 1\}\) \\
+    Type-1 Context Sensitive Languages & Natural Languages \(\{a^nb^nc^n|n>= 1\}\) \\
+    \rowcolor{yellow}
+    Type-0 Recursively Enumerable Languages & Turing Machines \\
+    \hline
+    \end{tabular}
+\end{center}
+\begin{center}
+     \textbf{Macros}
+\end{center}
+\begin{itemize}
+    \item Expanded during preprocessing into code of the programming language, useful for generating custom code.
+    \item Needs to worry about recursion(usually not expanded) and scoping issues.
+\end{itemize}
