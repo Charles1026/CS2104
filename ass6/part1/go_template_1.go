@@ -15,11 +15,15 @@ func NewAtomicSemaphore() *AtomicSemaphore {
 }
 
 func (s *AtomicSemaphore) Acquire() {
-// your implementation goes here
+	// your implementation goes here
+	for !atomic.CompareAndSwapInt32(&s.state, 1, 0) {
+
+	}
 }
 
 func (s *AtomicSemaphore) Release() {
-// your implementation goes here
+	// your implementation goes here
+	atomic.StoreInt32(&s.state, 1)
 }
 
 func main() {

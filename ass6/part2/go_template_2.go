@@ -17,15 +17,28 @@ func NewAccount(initialBalance int) *Account {
 }
 
 func (a *Account) Deposit(amount int) {
-// your implementation goes here
+	// your implementation goes here
+	a.mu.Lock()
+	a.balance += amount
+	a.mu.Unlock()
 }
 
 func (a *Account) Withdraw(amount int) (bool, int) {
-// your implementation goes here
+	// your implementation goes here
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	if a.balance >= amount {
+		a.balance -= amount
+		return true, a.balance
+	}
+	return false, a.balance
 }
 
 func (a *Account) Balance() int {
-// your implementation goes here
+	// your implementation goes here
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	return a.balance
 }
 
 func main() {

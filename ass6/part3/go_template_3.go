@@ -66,6 +66,17 @@ func (p *Philosopher) think() {
 
 func (t *Table) eat(p *Philosopher) {
 // your implementation goes here
+	if !t.forks[p.id].TryLock() { // try lock left fork
+		return // return to try again
+	}
+	defer t.forks[p.id].Unlock() // We successfully got the left fork, unlock after return
+
+	if !t.forks[(p.id + 1) % numberOfPhilosophers].TryLock() { // try lock right fork
+		return // return to try again
+	}
+	defer t.forks[(p.id + 1) % numberOfPhilosophers].Unlock() // We successfully got the right fork, unlock after return
+
+	fmt.Printf("Philosopher %d is eating\n", p.id)
 }
 
 func main() {
