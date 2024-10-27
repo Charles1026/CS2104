@@ -1,0 +1,59 @@
+//////////////////// Question 1 ////////////////////
+// Q1.1
+process_query('supervisor($name, list("Bitdiddle", "Ben"))');
+
+// Q1.2
+process_query('job($name, pair("accounting", $job))');
+
+// Q1.3
+process_query('address($name, pair("Slumerville", $address))');
+
+//////////////////// Question 2 ////////////////////
+// Q2.1
+process_query('and(supervisor($name, list("Bitdiddle", "Ben")), address($name, $address))');
+
+// Q2.2
+process_query('and(salary($person, $person_salary), salary(list("Bitdiddle", "Ben"), $ben_salary), javascript_predicate($person_salary < $ben_salary))');
+
+// Q2.3
+process_query('and(supervisor($person, $supervisor), job($supervisor, pair($supervisor_division, $supervisor_job)), javascript_predicate($supervisor_division !== "computer"))');
+
+//////////////////// Question 3 ////////////////////
+// Q3 Rule:
+process_query('assert(rule(same($same, $same)))');
+process_query(`assert(rule(recursive_can_do_job($j1, $j2), 
+    or(can_do_job($j1, $j2), 
+       and(can_do_job($j1, $intermediate), recursive_can_do_job($intermediate, $j2)))))`);
+process_query(`assert(rule(can_replace($p1, $p2),
+    and(job($p1, $p1_job), job($p2, $p2_job),
+        or(same($p1_job, $p2_job), recursive_can_do_job($p1_job, $p2_job)),
+        not(same($p1, $p2)))))`);
+
+// Q3.1
+process_query('can_replace($x, list("Fect", "Cy", "D"))'); 
+
+// Q3.2
+process_query('and(salary($p1, $s1), salary($p2, $s2), javascript_predicate($s1 < $s2), can_replace($p1, $p2))'); 
+
+//////////////////// Question 4 ////////////////////
+// Code
+next_to_in($x, $y, list(1, list(2, 3), 4))
+// Response
+// "next_to_in(list(2, 3), 4, list(1, list(2, 3), 4))"
+// "next_to_in(1, list(2, 3), list(1, list(2, 3), 4))"
+// Returns all the next to pairs in the outer list so (1, (2, 3)) and ((2, 3), 4), (2, 3) does not get expanded as the second rule only expands the rear term $z and (2, 3) ends up as the first term $v.
+
+// Code
+next_to_in($x, 1, list(2, 1, 3, 1))
+// Response
+// "next_to_in(3, 1, list(2, 1, 3, 1))"
+// "next_to_in(2, 1, list(2, 1, 3, 1))"
+// Since we fix y(the second variable) to be 1, we can only return next to pairs ending with 1, so it is (2, 1) and (3, 1)
+
+//////////////////// Question 5 ////////////////////
+// Rules
+process_query('assert(rule(last_pair(list($last), list($last))))');
+process_query('assert(rule(last_pair(pair($head, $tail), $last_pair), last_pair($tail, $last_pair)))');
+
+// It does not work on `process_query('last_pair($x, list(3))');` as the second rule will try to expand the $x term into pair($head, $tail) and since $x is a wildcard with no restrictions yet, there are infinitely many possibilities of pair($head, $tail) to expand into. 
+// This causes the program to get stuck on the expansion as it tries to expand every possible case before continuing and it never will finish as there are infinitely many cases.
