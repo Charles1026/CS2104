@@ -17,10 +17,12 @@ process_query('and(supervisor($x, $supervisor), job($supervisor, pair($divison, 
 // Question 3
 // rule
 process_query('assert(rule(same($x, $x)))');
+process_query('assert(rule(can_do_job_transitive($job1, $job2), can_do_job($job1, $job2)))');
+process_query('assert(rule(can_do_job_transitive($job1, $job2), and(can_do_job($job1, $lower_job), can_do_job_transitive($lower_job, $job2))))');
 process_query(`assert(rule(replace($person1, $person2), 
                             or(
                                 and(job($person1, $job), job($person2, $job), not(same($person1, $person2))),
-                                and(job($person1, $job1), job($person2, $job2), can_do_job($job1, $job2))
+                                and(job($person1, $job1), job($person2, $job2), can_do_job_transitive($job1, $job2))
                             )))`);
 // 1
 process_query('replace($x, list("Fect", "Cy", "D"))');
