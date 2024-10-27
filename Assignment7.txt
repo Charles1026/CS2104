@@ -1,0 +1,29 @@
+// Question 1
+// 1
+process_query('supervisor($x, list("Bitdiddle", "Ben"))');
+// 2
+process_query('job($x, pair("accounting", $tail))');
+// 3
+process_query('address($x, pair("Slumerville", $address))');
+
+// Question 2
+// 1
+process_query('and(supervisor($x, list("Bitdiddle", "Ben")), address($x, $address))');
+// 2
+process_query('and(salary($x, $x_salary), salary(list("Bitdiddle", "Ben"), $ben_salary), javascript_predicate($x_salary < $ben_salary))');
+// 3
+process_query('and(supervisor($x, $supervisor), job($supervisor, pair($divison, $job)), javascript_predicate($divison !== "computer"))');
+
+// Question 3
+// rule
+process_query('assert(rule(same($x, $x)))');
+process_query(`assert(rule(replace($person1, $person2), 
+                            or(
+                                and(job($person1, $job), job($person2, $job), not(same($person1, $person2))),
+                                and(job($person1, $job1), job($person2, $job2), can_do_job($job1, $job2))
+                            )))`);
+// 1
+process_query('replace($x, list("Fect", "Cy", "D"))');
+// 2
+process_query(`and(replace($person1, $person2), salary($person1, $1salary), salary($person2, $2_salary), 
+                    javascript_predicate($1salary < $2_salary))`);
