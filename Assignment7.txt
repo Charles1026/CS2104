@@ -22,7 +22,7 @@ process_query('assert(rule(can_do_job_transitive($job1, $job2), and(can_do_job($
 process_query(`assert(rule(replace($person1, $person2), 
                             or(
                                 and(job($person1, $job), job($person2, $job), not(same($person1, $person2))),
-                                and(job($person1, $job1), job($person2, $job2), can_do_job_transitive($job1, $job2))
+                                and(job($person1, $job1), job($person2, $job2), can_do_job_transitive($job1, $job2), not(same($person1, $person2)))
                             )))`);
 // 1
 process_query('replace($x, list("Fect", "Cy", "D"))');
@@ -44,4 +44,5 @@ process_query('assert(rule(last_pair(pair($head, $tail), $lp), last_pair($tail, 
 process_query('last_pair(list(3), $x)');
 process_query('last_pair(list(1, 2, 3), $x)');
 process_query('last_pair(list(2, $x), list(3))');
+// process_query('last_pair(list($x, 3), list(3))');
 // process_query('last_pair($x, list(3))');
